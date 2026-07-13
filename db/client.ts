@@ -1,0 +1,2 @@
+﻿import postgres from "postgres"; import { drizzle } from "drizzle-orm/postgres-js"; import * as schema from "./schema";
+let client:ReturnType<typeof postgres>|undefined; export function getSql(){if(!process.env.DATABASE_URL)throw new Error("DATABASE_URL is not configured"); return client??=postgres(process.env.DATABASE_URL,{max:5,prepare:false});} export const getDb=()=>drizzle(getSql(),{schema});

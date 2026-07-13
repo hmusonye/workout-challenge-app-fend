@@ -1,0 +1,1 @@
+﻿import { NextResponse } from "next/server"; export const unauthorized=()=>NextResponse.json({error:{code:"UNAUTHORIZED",message:"Sign in required"}},{status:401}); export const invalid=(message:string)=>NextResponse.json({error:{code:"INVALID_REQUEST",message}},{status:400});
