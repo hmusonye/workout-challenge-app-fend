@@ -1,0 +1,3 @@
+import{redirect}from"next/navigation";import{auth}from"@/auth";import TrackerApp from"@/components/tracker-app";
+type View="today"|"calendar"|"challenges"|"settings"|"activity";
+export default async function TrackerPage({view="today"}:{view?:View}){const session=await auth();if(!session&&process.env.E2E_BYPASS_AUTH!=="true")redirect("/login");return <TrackerApp view={view} userId={session?.user.id||"e2e-user"}/>}

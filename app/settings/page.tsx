@@ -1,1 +1,1 @@
-﻿import TrackerApp from"@/components/tracker-app";export default function Page(){return <TrackerApp view="settings"/>}
+import TrackerPage from"@/components/tracker-page";export default function Page(){return <TrackerPage view="settings"/>}
