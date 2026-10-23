@@ -1,0 +1,4 @@
+import { getSql } from "@/db/client";
+export async function getPublicBadge(slug:string){if(!/^[\w-]{6,32}$/.test(slug))return null;const[row]=await getSql()`select b.title,b.description,b.tier,b.icon,b.awarded_at,coalesce(u.name,split_part(u.email,'@',1)) as name from badges b join users u on u.id=b.user_id where b.share_slug=${slug}`;return row?{title:row.title as string,description:row.description as string,tier:row.tier as string,icon:row.icon as string,awardedAt:new Date(row.awarded_at).toISOString(),name:row.name as string}:null}
+export const TIER_COLORS:Record<string,[string,string]>={bronze:["#f0a46b","#8a4a1c"],silver:["#e7ecef","#7c8a94"],gold:["#ffe36b","#c48a00"],platinum:["#d7ff3f","#3fb6ff"]};
+export const ICON_GLYPH:Record<string,string>={trophy:"🏆",medal:"🏅",flame:"🔥",bolt:"⚡",spark:"✨",compass:"🧭"};

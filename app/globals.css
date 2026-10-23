@@ -34,3 +34,125 @@ html[data-theme="dark"]{--bg:#10120f;--panel:#191c17;--ink:#f5f7f0;--muted:#b3b9
 html[data-theme="dark"] .challengeActions .deleteChallenge{background:#351f21;border-color:#69383d}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .challengeActions .deleteChallenge{background:#351f21;border-color:#69383d}}
 @media(max-width:480px){.challengeActions{flex-direction:column}.challengeActions .deleteChallenge{width:100%}}
+
+/* ── Gamification & social ─────────────────────────────── */
+:root{--gold1:#ffe36b;--gold2:#c48a00;--silver1:#eef2f4;--silver2:#7c8a94;--bronze1:#f0a46b;--bronze2:#8a4a1c;--plat1:#d7ff3f;--plat2:#3fb6ff}
+.muted{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:var(--shadow);margin-top:16px}
+.panel.links{padding:4px 20px}
+.panel.links .dataAction{text-decoration:none}
+.panel.links .dataAction:last-child{border-bottom:0}
+.recordButton:active{transform:translateY(10px) scale(.985);box-shadow:0 8px 0 #1d2513,0 12px 24px rgba(76,109,0,.2)}
+.recordButton{animation:breathe 3.2s ease-in-out infinite}
+@keyframes breathe{50%{box-shadow:0 18px 0 #1d2513,0 26px 60px rgba(150,210,0,.42)}}
+@media (prefers-reduced-motion:reduce){.recordButton,.confetti i,.badgeMedal.big{animation:none!important}}
+
+.xpStrip{display:flex;align-items:center;gap:10px;margin-top:18px;text-decoration:none;color:#fff}
+.xpStrip .bar{flex:1;margin:0;background:#ffffff1f}
+.xpStrip small{font-size:.72rem;font-weight:800;color:#c9cfbf;white-space:nowrap}
+.levelChip{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:99px;background:var(--acid);color:#15190c;font-size:.72rem;font-weight:950;white-space:nowrap}
+.levelChip svg{width:13px;height:13px}
+.bar.xp i{background:linear-gradient(90deg,var(--acid),#7fe04a)}
+.conquered{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin:16px 0;padding:16px 18px;border-radius:22px;background:linear-gradient(135deg,#fff5c7,#ffe36b);color:#2b2200}
+.conquered>span{font-size:2rem}
+.conquered div{flex:1 1 180px;display:flex;flex-direction:column}
+.conquered small{opacity:.75}
+.conquered .primary{width:auto;margin:0;min-height:42px;flex:1 1 100%;text-decoration:none}
+
+.badgeMedal{--c1:var(--gold1);--c2:var(--gold2);width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#fff8 0 12%,transparent 13%),linear-gradient(145deg,var(--c1),var(--c2));box-shadow:inset 0 -5px 0 #0002,0 0 0 4px color-mix(in srgb,var(--c1) 35%,transparent),0 10px 24px color-mix(in srgb,var(--c2) 45%,transparent);font-size:1.8rem;flex:none}
+.badgeMedal.bronze{--c1:var(--bronze1);--c2:var(--bronze2)}
+.badgeMedal.silver{--c1:var(--silver1);--c2:var(--silver2)}
+.badgeMedal.platinum{--c1:var(--plat1);--c2:var(--plat2)}
+.badgeMedal.locked{background:var(--soft,#eceee7);box-shadow:none;color:var(--muted);width:48px;height:48px}
+.badgeMedal.locked svg{width:18px}
+.badgeMedal.big{width:132px;height:132px;font-size:4rem;margin:12px auto;animation:medalIn .7s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes medalIn{from{transform:scale(.2) rotate(-25deg);opacity:0}}
+.tierChip{display:inline-block;padding:4px 12px;border-radius:99px;font-size:.66rem;font-weight:950;letter-spacing:.14em;text-transform:uppercase;background:var(--soft,#eceee7)}
+.tierChip.gold{background:#fff1b0;color:#6b4c00}.tierChip.silver{background:#e8edf0;color:#41505a}.tierChip.bronze{background:#f8dcc6;color:#6d3612}.tierChip.platinum{background:#e5ffd0;color:#1e5a7a}
+
+.celebrateBackdrop{position:fixed;z-index:60;inset:0;background:#080a06b3;backdrop-filter:blur(8px);display:grid;place-items:center;padding:20px;overflow:hidden}
+.celebrate{position:relative;width:min(100%,400px);background:var(--panel);border-radius:30px;padding:30px 24px 22px;text-align:center;box-shadow:0 30px 90px #0008;animation:pop .45s cubic-bezier(.2,1.4,.4,1) both}
+.celebrate h2{font-size:1.9rem;letter-spacing:-.04em;margin:14px 0 6px}
+.celebrate p{color:var(--muted);line-height:1.5;margin:0 0 6px}
+.celebrate .outline{width:100%;margin-top:10px}
+@keyframes pop{from{transform:translateY(30px) scale(.9);opacity:0}}
+.confetti{position:absolute;inset:0;pointer-events:none}
+.confetti i{position:absolute;top:-20px;left:calc(var(--i) * 2.8%);width:9px;height:15px;border-radius:2px;background:hsl(calc(var(--i) * 37) 90% 60%);animation:fall calc(2.2s + var(--i) * .04s) calc(var(--i) * -.09s) linear infinite}
+@keyframes fall{to{transform:translateY(110vh) rotate(calc(var(--i) * 70deg))}}
+
+.profileHero{display:flex;gap:18px;align-items:center;padding:22px;border-radius:28px;background:var(--ink);color:#fff;box-shadow:var(--shadow)}
+.avatar{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;flex:none;background:linear-gradient(145deg,var(--acid),#7fe04a);color:#15190c;font-size:2rem;font-weight:950}
+.avatar.small{width:38px;height:38px;font-size:1rem}
+.profileName{flex:1;min-width:0}
+.profileName .eyebrow{color:#9da397}
+.profileName h2{margin:0 0 8px;font-size:1.7rem;letter-spacing:-.04em;overflow:hidden;text-overflow:ellipsis}
+.profileName .bar{background:#ffffff1f;margin:8px 0 0}
+.levelRow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.levelRow small{color:#c9cfbf;font-weight:750;font-size:.75rem}
+.statGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.statGrid div{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:2px}
+.statGrid svg{width:18px;color:#689800;margin-bottom:6px}
+.statGrid b{font-size:1.45rem;letter-spacing:-.04em}
+.statGrid span{font-size:.7rem;color:var(--muted);font-weight:800}
+.bestDay{margin:14px 4px 0;color:var(--muted)}
+.activityBars>div{display:grid;grid-template-columns:110px 1fr auto;gap:12px;align-items:center}
+.activityBars span{font-weight:800;font-size:.85rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.activityBars .bar{grid-column:auto;margin:10px 0}
+.badgeWall{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.badgeTile{position:relative;border:1px solid var(--line);background:transparent;border-radius:20px;padding:16px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;transition:.15s}
+.badgeTile:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.badgeTile b{font-size:.8rem;line-height:1.2}
+.badgeTile small{font-size:.66rem;color:var(--muted)}
+.badgeTile .shareHint{position:absolute;top:8px;right:8px;width:13px;color:var(--muted)}
+.goalsTitle{margin-top:20px}
+.goalList{display:grid;gap:10px}
+.goal{display:flex;gap:12px;align-items:center}
+.goal>div:last-child{flex:1}
+.goal .bar{margin:6px 0 2px}
+.goal small{color:var(--muted);font-size:.72rem}
+.inviteCard{width:100%;margin-top:16px;display:flex;align-items:center;gap:14px;text-align:left;border:0;border-radius:24px;padding:20px;background:linear-gradient(135deg,var(--acid),#9be15d);color:#15190c;box-shadow:var(--shadow)}
+.inviteCard span{flex:1;display:flex;flex-direction:column}
+.inviteCard small{opacity:.75}
+
+.segmented{display:flex;gap:4px;padding:4px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
+.segmented button{flex:1;min-height:40px;border:0;border-radius:12px;background:transparent;font-weight:850;font-size:.82rem}
+.segmented button.active{background:var(--ink);color:var(--bg)}
+.segmented button:disabled{opacity:.4}
+.scopeSelect{display:flex;flex-direction:column;gap:6px;margin:14px 0 0;font-size:.72rem;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.scopeSelect select,.inviteRow select{min-height:48px;border-radius:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:0 12px;font-weight:800;text-transform:none;letter-spacing:0}
+.podium{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;gap:10px;margin:26px 0 0}
+.podium .step{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;min-width:0}
+.podium .step b{font-size:.85rem;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.podium .step span{font-size:.75rem;color:var(--muted);font-weight:800}
+.podium .block{width:100%;border-radius:16px 16px 6px 6px;display:grid;place-items:center;font-weight:950;font-size:1.4rem;margin-top:6px;background:var(--panel);border:1px solid var(--line)}
+.podium .p1 .block{height:120px;background:linear-gradient(180deg,var(--gold1),var(--gold2));color:#3a2a00;border:0}
+.podium .p2 .block{height:88px;background:linear-gradient(180deg,var(--silver1),var(--silver2));color:#1d2429;border:0}
+.podium .p3 .block{height:64px;background:linear-gradient(180deg,var(--bronze1),var(--bronze2));color:#fff;border:0}
+.podium .p1 .avatar{width:64px;height:64px;box-shadow:0 0 0 4px var(--gold1)}
+.podium .me .avatar{outline:3px solid var(--ink);outline-offset:2px}
+.rankList{list-style:none;margin:0;padding:0}
+.rankList li{display:flex;align-items:center;gap:12px;padding:12px 6px;border-bottom:1px solid var(--line)}
+.rankList li:last-child{border-bottom:0}
+.rankList li.me{background:color-mix(in srgb,var(--acid) 18%,transparent);border-radius:14px}
+.rankList .rank{width:22px;text-align:center;font-weight:950;color:var(--muted)}
+.rankList .who{flex:1;min-width:0;display:flex;flex-direction:column}
+.rankList .who .bar{margin:6px 0 0}
+.rankList small{color:var(--muted);font-size:.72rem}
+.rankList .score{font-size:1.15rem;letter-spacing:-.03em}
+.emptyBoard{text-align:center;padding:26px 10px 0}
+.emptyBoard h2{margin:0 0 6px}
+.inviteRow{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.inviteRow select{width:100%}
+
+.inviteBanner{display:flex;gap:12px;align-items:center;padding:14px 16px;margin:4px 0 18px;border-radius:18px;background:color-mix(in srgb,var(--acid) 28%,var(--panel))}
+.inviteBanner>span{font-size:1.6rem}
+.inviteBanner div{display:flex;flex-direction:column}
+.inviteBanner small{color:var(--muted)}
+.publicBadge{min-height:100vh;display:grid;place-items:center;padding:28px 18px;text-align:center}
+.publicBadge section{width:min(100%,520px);background:var(--panel);border:1px solid var(--line);border-radius:32px;padding:34px 26px;box-shadow:var(--shadow)}
+.publicBadge h1{font-size:clamp(2rem,8vw,3rem);letter-spacing:-.05em;margin:14px 0 0;line-height:1}
+.publicBadge .lede{margin:14px 0}
+.publicBadge .primary{text-decoration:none}
+.earnedBy{color:var(--muted);font-size:.9rem}
+@media (max-width:420px){.statGrid{grid-template-columns:repeat(2,1fr)}.activityBars>div{grid-template-columns:80px 1fr auto}}
+.celebrate .primary,.celebrate .outline{width:100%;min-height:52px;border-radius:15px}.celebrate .outline{border:1px solid var(--line);background:transparent;color:var(--ink)}

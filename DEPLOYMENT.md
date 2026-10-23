@@ -1,4 +1,18 @@
-﻿# REPS deployment
+# REPS deployment
+
+Production runs at **https://tizitap.click** (`APP_DOMAIN=tizitap.click`). Caddy obtains the TLS certificate automatically once the DNS A/AAAA records for `tizitap.click` point at the VPS and ports 80/443 are open.
+
+Quick start on the VPS:
+
+```bash
+git clone git@github.com:hmusonye/workout-challenge-app-fend.git && cd workout-challenge-app-fend
+cp .env.example .env   # set APP_DOMAIN=tizitap.click, strong POSTGRES_PASSWORD, AUTH_SECRET=$(openssl rand -base64 32)
+docker compose build app && docker compose up -d db
+docker compose run --rm app node scripts/migrate.mjs
+docker compose up -d
+```
+
+Users sign up with email and password at `/login`. Devices that already hold challenges in the browser (IndexedDB) upload them automatically after the first sign-in on that device: anything the server doesn't have is queued and synced, completed challenges are closed, and earned badges are minted.
 
 1. Point the domain A/AAAA records at the VPS and install Docker Engine plus Compose.
 2. Copy `.env.example` to `.env`, replace every placeholder, and keep it outside Git.
