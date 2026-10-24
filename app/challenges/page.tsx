@@ -1,1 +1,0 @@
-import TrackerPage from"@/components/tracker-page";export default function Page(){return <TrackerPage view="challenges"/>}
