@@ -15,6 +15,13 @@
       "when": 1792787104707,
       "tag": "0001_social_gamification",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793209737400,
+      "tag": "0002_repair_double_encoded_json",
+      "breakpoints": true
     }
   ]
 }

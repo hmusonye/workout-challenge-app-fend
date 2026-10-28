@@ -8,6 +8,7 @@ import { applyTheme, readThemePref, watchSystemTheme, type ThemePref } from "@/l
 import { totalProgress } from "@/lib/challenge-math";
 import type { Badge, Challenge, ExerciseSet, UserSettings } from "@/types";
 import { shareLink } from "@/components/social-views";
+import { normalizeChallenge } from "@/lib/serialize";
 import type { PlannedImport } from "@/lib/backup";
 
 export interface ImportProgress { phase: "saving" | "uploading" | "done"; done: number; total: number }
@@ -74,7 +75,8 @@ export function useTracker(userId: string) {
     for (const c of remote.challenges || []) {
       if (pendingIds.has(c.id)) continue;
       if (c.deletedAt) { if (cById.has(c.id)) removed.push(c.id); continue; }
-      const { deletedAt: _d, ...clean } = c; void _d;
+      const { deletedAt: _d, ...rest } = c; void _d;
+      const clean = normalizeChallenge(rest);
       const mine = cById.get(c.id);
       if (!mine || mine.updatedAt < c.updatedAt || mine.status !== c.status) putC.push(clean);
     }
@@ -211,7 +213,7 @@ export function useTracker(userId: string) {
           if (remote.newBadges?.length) setCelebrating(byImportance(remote.newBadges).slice(0, 3));
           const merge = <T extends { id: string }>(local: T[], server: T[]) => { const m = new Map(local.map((i) => [i.id, i])); for (const i of server) if (!pendingIds.has(i.id) || !m.has(i.id)) m.set(i.id, i); return [...m.values()]; };
           // Challenges deleted on another device disappear here too.
-          c = merge(c.filter((x) => !deleted.has(x.id)), remote.challenges);
+          c = merge(c.filter((x) => !deleted.has(x.id)), (remote.challenges as Challenge[]).map(normalizeChallenge));
           s = merge(s, remote.sets);
           st = remote.settings || st;
           if (remote.cursor) localStorage.setItem(cursorKey, remote.cursor);
@@ -219,6 +221,7 @@ export function useTracker(userId: string) {
         }
       } catch {}
     }
+    c = c.map(normalizeChallenge);
     if (c.length && st && !st.onboardingComplete) { st = { ...st, onboardingComplete: true }; await localDb.settings.put(st); void saveSettingsRemote(st); }
     setChallenges(c); setSets(s); setSettings(st || null);
     setHaptics(st?.hapticsEnabled ?? true);
